@@ -89,8 +89,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 title: "Security & Password",
                               ),
                               _buildProfileOption(
-                                leadingIcon: Icons.notifications_outlined,
-                                title: "Notification",
+                                leadingIcon: Icons.language_outlined,
+                                title: "Language",
                               ),
                               _buildProfileOption(
                                 leadingIcon: Icons.dark_mode_outlined,
