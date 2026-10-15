@@ -13,18 +13,18 @@ class CategoryCard extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: AppColors.themeColor.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(50),
           ),
           child: const Icon(
             Icons.computer,
-            color: AppColors.themeColor,
+            color: Colors.black,
             size: 48,
           ),
         ),
         const SizedBox(height: 4),
         const Text(
           "Electronics",
-          style: TextStyle(color: AppColors.themeColor),
+          style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
         ),
       ],
     );

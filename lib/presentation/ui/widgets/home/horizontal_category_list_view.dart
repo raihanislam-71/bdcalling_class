@@ -12,7 +12,7 @@ class HorizontalCategoriesListView extends StatelessWidget {
       itemBuilder: (context, index) {
         return const CategoryCard();
       },
-      separatorBuilder: (_, _) => const SizedBox(width: 8),
+      separatorBuilder: (_, _) => const SizedBox(width: 16),
     );
   }
 }

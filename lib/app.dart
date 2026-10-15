@@ -21,6 +21,8 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: const TextTheme(
           headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
+          headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+          headlineSmall: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
         ),
 
         navigationBarTheme: NavigationBarThemeData(

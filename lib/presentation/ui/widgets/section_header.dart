@@ -10,7 +10,7 @@ class SectionHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title, style: Theme.of(context).textTheme.headlineLarge),
+        Text(title, style: Theme.of(context).textTheme.headlineMedium),
         TextButton(onPressed: onTap, child: const Text("See all")),
       ],
     );
