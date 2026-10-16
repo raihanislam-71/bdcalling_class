@@ -17,7 +17,7 @@ class RecommendedForYouGridCard extends StatelessWidget {
           children: [
             Container(
               width: 200,
-              height: 100,
+              height: 90,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: AppColors.themeColor.withOpacity(0.1),
