@@ -20,12 +20,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
+      backgroundColor: const Color(0xFFF3F5FA),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               const HomeBannerSlider(),
+              const SizedBox(height: 16),
+              SectionHeader(title: "Category", onTap: () {}),
               const SizedBox(height: 16),
               _buildCategoriesSection(),
               const SizedBox(height: 16),
@@ -195,11 +198,16 @@ class _HomeScreenState extends State<HomeScreen> {
   AppBar _buildAppBar() {
     return AppBar(
       backgroundColor: Colors.white,
-      title: Image.asset(
-        AssetsPath.appLogo,
-        width: 200,
-        height: 200,
-        color: Colors.black,
+      title: Row(
+        children: [
+          Image.asset(
+            AssetsPath.appLogo,
+          ),
+          Image.asset(
+            AssetsPath.appName,
+            color: Colors.black,
+          ),
+        ],
       ),
       actions: [
         IconButton(onPressed: () {}, icon: const Icon(Icons.search, size: 32)),
@@ -212,12 +220,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildCategoriesSection() {
-    return Column(
-      children: [
-        SectionHeader(title: "Category", onTap: () {}),
-        const SizedBox(height: 8),
-        const SizedBox(height: 110, child: HorizontalCategoriesListView()),
-      ],
-    );
+    return SizedBox(height: 110, child: HorizontalCategoriesListView());
   }
 }

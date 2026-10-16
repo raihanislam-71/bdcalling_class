@@ -1,30 +1,47 @@
+import 'package:bdcalling_class/presentation/ui/utils/assets_path.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/app_colors.dart';
 
 class CategoryCard extends StatelessWidget {
-  const CategoryCard({super.key});
+  const CategoryCard({
+    super.key,
+    required this.imagePath,
+    required this.categoryName,
+  });
+
+  final String imagePath;
+  final String categoryName;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: AppColors.themeColor.withOpacity(0.1),
             borderRadius: BorderRadius.circular(50),
           ),
-          child: const Icon(
-            Icons.computer,
-            color: Colors.black,
-            size: 48,
+          child: Container(
+            width: 70,
+            height: 70,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: AssetImage(imagePath),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
         ),
         const SizedBox(height: 4),
-        const Text(
-          "Electronics",
-          style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+        Text(
+          categoryName,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ],
     );

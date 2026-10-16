@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       horizontal: 42,
                       vertical: 22,
                     ),
-                    child: Image.asset(AssetsPath.appLogo),
+                    child: Image.asset(AssetsPath.splashLogo),
                   ),
                   const SizedBox(
                     width: 170,
