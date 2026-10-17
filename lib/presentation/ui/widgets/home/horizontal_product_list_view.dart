@@ -10,7 +10,7 @@ class HorizontalProductListView extends StatelessWidget {
       itemCount: 5,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        return const ProductCard();
+        return ProductCard(productId: index.toString(),);
       },
       separatorBuilder: (_, _) => const SizedBox(width: 8),
     );

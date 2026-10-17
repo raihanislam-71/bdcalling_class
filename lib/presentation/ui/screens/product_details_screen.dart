@@ -1,0 +1,213 @@
+import 'package:bdcalling_class/presentation/ui/utils/app_colors.dart';
+import 'package:bdcalling_class/presentation/ui/widgets/product_details/color_picker.dart';
+import 'package:bdcalling_class/presentation/ui/widgets/product_details/product_image_slider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
+class ProductDetailsScreen extends StatefulWidget {
+  const ProductDetailsScreen({super.key, required this.productId});
+
+  final String productId;
+
+  @override
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+}
+
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Product Details"),
+        surfaceTintColor: Colors.white,
+        backgroundColor: Colors.white,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ProductImageSlider(productId: widget.productId),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      _buildBadge('SAVE 27%', AppColors.themeColor),
+                      const SizedBox(width: 8),
+                      _buildBadge('IN STOCK', Colors.green),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    "Sony WH-1000XM5 Wireless Headphones",
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      RatingBarIndicator(
+                        rating: 4.5,
+                        itemBuilder: (context, index) =>
+                            const Icon(Icons.star, color: Colors.amber),
+                        itemSize: 20,
+                        direction: Axis.horizontal,
+                      ),
+                      const SizedBox(width: 8),
+                      const Text(
+                        "4.5",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      const Text(
+                        "(142 Reviews)",
+                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  const Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        "৳ 32,500",
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.themeColor,
+                        ),
+                      ),
+                      SizedBox(width: 12),
+                      Text(
+                        "৳ 45,000",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black54,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  ColorPicker(
+                    colors: const [
+                      Colors.orange,
+                      Colors.red,
+                      Colors.black,
+                      Colors.grey,
+                      Colors.blue,
+                    ],
+                    onColorSelected: (color) {},
+                  ),
+                  const SizedBox(height: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Full Key Specifications",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      _buildSpecificationItem("Battery Life", "Up to 30 Hours"),
+                      _buildSpecificationItem(
+                        "Noise Cancelling",
+                        "Industry Leading ANC",
+                      ),
+                      _buildSpecificationItem("Driver Size", "30mm"),
+                      _buildSpecificationItem("Connectivity", "Bluetooth 5.2"),
+                      _buildSpecificationItem("Weight", "250g"),
+                      _buildSpecificationItem(
+                        "Codec Support",
+                        "LDAC / AAC / SBC",
+                      ),
+                      _buildSpecificationItem(
+                        "Microphone",
+                        "Beamforming (4 mics)",
+                      ),
+                      _buildSpecificationItem("Water Resistance", "None"),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Description",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        '''The Sony WH-1000XM5 delivers exceptional sound quality with clear highs, rich bass, and a balanced signature that stays natural across every genre. Whether you're commuting, working, or relaxing, the industry-leading noise cancellation helps you focus on the music while keeping background distractions at bay. Comfort is designed for long listening sessions. The headphones feel lightweight, and the soft ear cushions are shaped to fit comfortably around your ears without putting pressure on the sides of your head. With up to 30 hours of battery life and quick charging, you can enjoy uninterrupted listening all day.''',
+                        style: TextStyle(color: Colors.black54),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  Widget _buildSpecificationItem(String title, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w400,
+              color: Colors.black54,
+            ),
+          ),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBadge(String text, Color color) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: color,
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+}

@@ -5,7 +5,6 @@ import 'package:bdcalling_class/presentation/ui/screens/profile_screen.dart';
 import 'package:bdcalling_class/presentation/ui/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'category_screen.dart';
 
 class MainBottomNavScreen extends StatefulWidget {
@@ -16,8 +15,7 @@ class MainBottomNavScreen extends StatefulWidget {
 }
 
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
-  final BottomNavController _bottomNavController =
-      Get.find<BottomNavController>();
+  final BottomNavController _bottomNavController = Get.find<BottomNavController>();
 
   final List<Widget> _screens = const [
     HomeScreen(),
@@ -33,42 +31,92 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
         return Scaffold(
           body: _screens[_bottomNavController.selectedIndex],
           bottomNavigationBar: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: NavigationBar(
-                backgroundColor: Colors.black,
-                indicatorColor: AppColors.themeColor,
-                selectedIndex: _bottomNavController.selectedIndex,
-                onDestinationSelected: _bottomNavController.changeIndex,
-                labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-                destinations: const [
-                  NavigationDestination(
-                    icon: Icon(Icons.home,size: 35,color: Colors.white),
-                    selectedIcon: Icon(Icons.home, color: Colors.white),
-                    label: '',
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+            child: Container(
+              height: 70,
+              decoration: BoxDecoration(
+                color: const Color(0xFF0F172A), // ডার্ক নেভি ব্যাকগ্রাউন্ড
+                borderRadius: BorderRadius.circular(35),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
                   ),
-                  NavigationDestination(
-                    icon: Icon(Icons.category,size: 35,color: Colors.white),
-                    selectedIcon: Icon(Icons.category, color: Colors.white),
-                    label: "",
-                  ),
-                  NavigationDestination(
-                    icon: Icon(Icons.shopping_cart,size: 35,color: Colors.white),
-                    selectedIcon: Icon(Icons.shopping_cart, color: Colors.white),
-                    label: '',
-                  ),
-                  NavigationDestination(
-                    icon: Icon(Icons.person,size: 35,color: Colors.white),
-                    selectedIcon: Icon(Icons.person, color: Colors.white),
-                    label: '',
-                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildNavItem(0, Icons.home_filled, "Home"),
+                  _buildNavItem(1, Icons.grid_view_rounded, "Category"),
+                  _buildNavItem(2, Icons.shopping_cart, "Cart", badge: 3),
+                  _buildNavItem(3, Icons.person, "Profile"),
                 ],
               ),
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget _buildNavItem(int index, IconData icon, String label, {int badge = 0}) {
+    bool isSelected = _bottomNavController.selectedIndex == index;
+    return GestureDetector(
+      onTap: () => _bottomNavController.changeIndex(index),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? AppColors.themeColor : Colors.transparent,
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: Row(
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Icon(
+                  icon,
+                  color: isSelected ? Colors.white : Colors.white.withOpacity(0.7),
+                  size: 26,
+                ),
+                if (badge > 0)
+                  Positioned(
+                    right: -6,
+                    top: -6,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: const BoxDecoration(
+                        color: AppColors.themeColor,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        badge.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            if (isSelected) ...[
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
     );
   }
 }

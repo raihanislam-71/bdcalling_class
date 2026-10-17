@@ -150,4 +150,10 @@ class _HomeBannerSliderState extends State<HomeBannerSlider> {
       ],
     );
   }
+
+  @override
+  void dispose() {
+    _selectedIndex.dispose();
+    super.dispose();
+  }
 }
