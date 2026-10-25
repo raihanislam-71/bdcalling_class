@@ -18,11 +18,20 @@ class _ProductImageSliderState extends State<ProductImageSlider> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    double dynamicHeight = screenWidth * 0.55;
+
+    if (screenWidth > 600) {
+      dynamicHeight = 300;
+    } else if (screenWidth < 350) {
+      dynamicHeight = 180;
+    }
+
     return Stack(
       children: [
         CarouselSlider(
           options: CarouselOptions(
-            height: 200,
+            height: dynamicHeight,
             viewportFraction: 1,
             onPageChanged: ((index, reason) {
               _selectedIndex.value = index;
@@ -53,9 +62,14 @@ class _ProductImageSliderState extends State<ProductImageSlider> {
                       width: 12,
                       margin: const EdgeInsets.only(right: 4),
                       decoration: BoxDecoration(
-                        color: currentIndex == i ? AppColors.themeColor : null,
+                        color: currentIndex == i
+                            ? AppColors.themeColor
+                            : Colors.white54,
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: Colors.grey),
+                        border: Border.all(
+                          color: Colors.grey.shade400,
+                          width: 0.5,
+                        ),
                       ),
                     ),
                 ],

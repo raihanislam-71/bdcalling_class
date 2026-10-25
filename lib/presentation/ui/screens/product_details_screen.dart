@@ -1,8 +1,12 @@
+import 'package:bdcalling_class/presentation/state_holders/review_controller.dart';
 import 'package:bdcalling_class/presentation/ui/utils/app_colors.dart';
 import 'package:bdcalling_class/presentation/ui/widgets/product_details/color_picker.dart';
 import 'package:bdcalling_class/presentation/ui/widgets/product_details/product_image_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
+
+import '../widgets/product_details/rating_and_reviews_section.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key, required this.productId});
@@ -48,30 +52,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      RatingBarIndicator(
-                        rating: 4.5,
-                        itemBuilder: (context, index) =>
-                            const Icon(Icons.star, color: Colors.amber),
-                        itemSize: 20,
-                        direction: Axis.horizontal,
-                      ),
-                      const SizedBox(width: 8),
-                      const Text(
-                        "4.5",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      const Text(
-                        "(142 Reviews)",
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
-                      ),
-                    ],
-                  ),
+                  const RatingAndReviewsSection(),
                   const SizedBox(height: 16),
                   const Row(
                     crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -156,6 +137,56 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 16),
+                  Column(
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Reviews",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          RatingAndReviewsSection(),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+
+                      _buildReviewList(),
+
+                      const SizedBox(height: 16),
+
+                      GetBuilder<ReviewController>(
+                        builder: (reviewController) {
+                          return SizedBox(
+                            width: double.infinity,
+                            child: OutlinedButton(
+                              onPressed: () {
+                                reviewController.toggleExpand();
+                              },
+                              style: OutlinedButton.styleFrom(
+                                side: const BorderSide(color: Colors.orange),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                padding: const EdgeInsets.symmetric(vertical: 12),
+                              ),
+                              child: Text(
+                                reviewController.isExpanded ? "Show Less" : "See All 142 Reviews",
+                                style: const TextStyle(
+                                  color: Colors.orange,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -165,6 +196,69 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
+  Widget _buildReviewList() {
+    return GetBuilder<ReviewController>(
+      builder: (reviewController) {
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: reviewController.isExpanded ? 10 : 3,
+          itemBuilder: (context, index) {
+            return _buildUserReviewsCard();
+          },
+        );
+      }
+    );
+  }
+
+  Widget _buildUserReviewsCard() {
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: Colors.grey.shade200),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Text(
+                  "Aisha Rahman",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                ),
+                const SizedBox(width: 8),
+                RatingBarIndicator(
+                  rating: 5,
+                  itemBuilder: (context, index) =>
+                      const Icon(Icons.star, color: Colors.amber),
+                  itemCount: 5,
+                  itemSize: 16.0,
+                  direction: Axis.horizontal,
+                ),
+                const Spacer(),
+                const Text(
+                  "12 Mar 2026",
+                  style: TextStyle(color: Colors.black45, fontSize: 12),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              "These are hands-down the best over-ears I've owned. The sound is incredibly detailed, noise cancellation is almost silent.",
+              style: TextStyle(
+                color: Colors.black87,
+                fontSize: 13,
+                height: 1.4,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget _buildSpecificationItem(String title, String value) {
     return Padding(

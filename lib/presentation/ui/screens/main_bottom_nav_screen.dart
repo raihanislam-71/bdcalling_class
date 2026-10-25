@@ -29,13 +29,15 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
     return GetBuilder<BottomNavController>(
       builder: (_) {
         return Scaffold(
+          extendBody: true,
+          backgroundColor: Colors.transparent,
           body: _screens[_bottomNavController.selectedIndex],
           bottomNavigationBar: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
             child: Container(
               height: 70,
               decoration: BoxDecoration(
-                color: const Color(0xFF0F172A), // ডার্ক নেভি ব্যাকগ্রাউন্ড
+                color: const Color(0xFF0F172A),
                 borderRadius: BorderRadius.circular(35),
                 boxShadow: [
                   BoxShadow(
@@ -50,7 +52,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
                 children: [
                   _buildNavItem(0, Icons.home_filled, "Home"),
                   _buildNavItem(1, Icons.grid_view_rounded, "Category"),
-                  _buildNavItem(2, Icons.shopping_cart, "Cart", badge: 3),
+                  _buildNavItem(2, Icons.shopping_cart, "Cart"),
                   _buildNavItem(3, Icons.person, "Profile"),
                 ],
               ),
