@@ -1,4 +1,4 @@
-import 'package:bdcalling_class/presentation/state_holders/review_controller.dart';
+import 'package:bdcalling_class/presentation/ui/screens/review_screen.dart';
 import 'package:bdcalling_class/presentation/ui/utils/app_colors.dart';
 import 'package:bdcalling_class/presentation/ui/widgets/product_details/color_picker.dart';
 import 'package:bdcalling_class/presentation/ui/widgets/product_details/product_image_slider.dart';
@@ -155,36 +155,35 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ],
                       ),
                       const SizedBox(height: 6),
-
                       _buildReviewList(),
-
                       const SizedBox(height: 16),
-
-                      GetBuilder<ReviewController>(
-                        builder: (reviewController) {
-                          return SizedBox(
-                            width: double.infinity,
-                            child: OutlinedButton(
-                              onPressed: () {
-                                reviewController.toggleExpand();
-                              },
-                              style: OutlinedButton.styleFrom(
-                                side: const BorderSide(color: Colors.orange),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                padding: const EdgeInsets.symmetric(vertical: 12),
+                      SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ReviewScreen(productId: widget.productId),
                               ),
-                              child: Text(
-                                reviewController.isExpanded ? "Show Less" : "See All 142 Reviews",
-                                style: const TextStyle(
-                                  color: Colors.orange,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                            );
+                          },
+                          style: OutlinedButton.styleFrom(
+                            side: const BorderSide(color: Colors.orange),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                          );
-                        }
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                          ),
+                          child: const Text(
+                            "See All 142 Reviews",
+                            style: TextStyle(
+                              color: Colors.orange,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -225,15 +224,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 child: Row(
                   children: [
                     IconButton(
-                      onPressed: () => productCartButtonController.updateQuantity(-1),
+                      onPressed: () =>
+                          productCartButtonController.updateQuantity(-1),
                       icon: const Icon(Icons.remove, size: 20),
                     ),
                     Text(
                       "${productCartButtonController.quantity}",
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     IconButton(
-                      onPressed: () => productCartButtonController.updateQuantity(1),
+                      onPressed: () =>
+                          productCartButtonController.updateQuantity(1),
                       icon: const Icon(Icons.add, size: 20),
                     ),
                   ],
@@ -256,7 +260,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                   child: Text(
                     "Add to Cart - ৳ ${productCartButtonController.totalPrice.toStringAsFixed(0)}",
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -267,69 +274,85 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-
-
   Widget _buildReviewList() {
-    return GetBuilder<ReviewController>(
-      builder: (reviewController) {
-        return ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: reviewController.isExpanded ? 10 : 3,
-          itemBuilder: (context, index) {
-            return _buildUserReviewsCard();
-          },
-        );
-      }
-    );
-  }
+    const reviews = [
+      {
+        'name': 'Aisha Rahman',
+        'date': '12 Mar 2026',
+        'text': "These are hands-down the best over-ears I've owned. The sound is incredibly detailed, noise cancellation is almost silent, and they stay comfortable even after a full day of travel.",
+      },
+      {
+        'name': 'Omar Khan',
+        'date': '08 Mar 2026',
+        'text': 'Great overall, but the case feels a bit larger than I expected. The sound quality and touch controls are worth it.',
+      },
+      {
+        'name': 'Priya Sengupta',
+        'date': '02 Mar 2026',
+        'text': 'Perfect for long flights. The ANC is incredible in loud environments and the battery life easily lasts a full day.',
+      },
+    ];
 
-  Widget _buildUserReviewsCard() {
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: Colors.grey.shade200),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const Text(
-                  "Aisha Rahman",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                ),
-                const SizedBox(width: 8),
-                RatingBarIndicator(
-                  rating: 5,
-                  itemBuilder: (context, index) =>
-                      const Icon(Icons.star, color: Colors.amber),
-                  itemCount: 5,
-                  itemSize: 16.0,
-                  direction: Axis.horizontal,
-                ),
-                const Spacer(),
-                const Text(
-                  "12 Mar 2026",
-                  style: TextStyle(color: Colors.black45, fontSize: 12),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              "These are hands-down the best over-ears I've owned. The sound is incredibly detailed, noise cancellation is almost silent.",
-              style: TextStyle(
-                color: Colors.black87,
-                fontSize: 13,
-                height: 1.4,
+    return Column(
+      children: reviews.map((review) {
+        return Container(
+          width: double.infinity,
+          margin: const EdgeInsets.symmetric(vertical: 4),
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: const Color(0xFFE6E8EC)),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      review['name']!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF17191D),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  RatingBarIndicator(
+                    rating: 5,
+                    itemCount: 5,
+                    itemSize: 10,
+                    unratedColor: const Color(0xFFE7E9ED),
+                    itemBuilder: (context, index) =>
+                        const Icon(Icons.star, color: Color(0xFFFF8A00)),
+                  ),
+                  const SizedBox(width: 5),
+                  Text(
+                    review['date']!,
+                    style: const TextStyle(
+                      fontSize: 8,
+                      color: Color(0xFF777D87),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
-      ),
+              const SizedBox(height: 7),
+              Text(
+                review['text']!,
+                style: const TextStyle(
+                  fontSize: 10,
+                  height: 1.4,
+                  color: Color(0xFF30343A),
+                ),
+              ),
+            ],
+          ),
+        );
+      }).toList(),
     );
   }
 
